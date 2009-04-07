@@ -9,7 +9,7 @@ Source0:	http://www.chimeric.de/_src/plugin-blog.tgz
 # Source0-md5:	772b602ffaf2270c1d8611e8a5243e3c
 Source1:	dokuwiki-find-lang.sh
 URL:		http://www.dokuwiki.org/plugin:blog
-Requires:	dokuwiki >= 20061106
+Requires:	dokuwiki >= 20080505
 Requires:	dokuwiki-plugin-include
 Requires:	dokuwiki-plugin-pagelist
 BuildArch:	noarch
