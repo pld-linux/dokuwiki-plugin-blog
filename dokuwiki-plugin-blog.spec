@@ -24,12 +24,18 @@ This plugin makes blogs in your wiki easily possible.
 
 %prep
 %setup -q -n %{plugin}
+if [ $(cat VERSION | tr -d -) != %{version} ]; then
+	: %%{version} mismatch, should be: $(cat VERSION | tr -d -)
+	exit 1
+fi
+
+rm -f blog.tar.gz
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
-rm -rf $RPM_BUILD_ROOT%{plugindir}/{blog.tar.gz,COPYING,README,VERSION,_template.txt}
+rm -rf $RPM_BUILD_ROOT%{plugindir}/{COPYING,README,VERSION,_template.txt}
 
 # find locales
 sh %{SOURCE1} %{name}.lang
