@@ -29,7 +29,7 @@ This plugin makes blogs in your wiki easily possible.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
-rm -rf $RPM_BUILD_ROOT%{plugindir}/{blog.tar.gz,COPYING,README,VERSION}
+rm -rf $RPM_BUILD_ROOT%{plugindir}/{blog.tar.gz,COPYING,README,VERSION,_template.txt}
 
 # find locales
 sh %{SOURCE1} %{name}.lang
@@ -45,7 +45,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README
+%doc README _template.txt
 %dir %{plugindir}
 %{plugindir}/*.php
 %{plugindir}/*.css
