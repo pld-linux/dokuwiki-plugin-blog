@@ -24,8 +24,9 @@ This plugin makes blogs in your wiki easily possible.
 
 %prep
 %setup -q -n %{plugin}
-if [ $(cat VERSION | tr -d -) != %{version} ]; then
-	: %%{version} mismatch, should be: $(cat VERSION | tr -d -)
+version=$(cat VERSION)
+if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
+	: %%{version} mismatch
 	exit 1
 fi
 
