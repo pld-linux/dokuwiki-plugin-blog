@@ -1,14 +1,14 @@
 %define		plugin		blog
 Summary:	DokuWiki Blog Plugin
 Name:		dokuwiki-plugin-%{plugin}
-Version:	20080718
-Release:	1
+Version:	20090912
+Release:	0.1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://www.chimeric.de/_src/plugin-blog.tgz
-# Source0-md5:	772b602ffaf2270c1d8611e8a5243e3c
-Source1:	dokuwiki-find-lang.sh
+Source0:	http://cloud.github.com/downloads/dokufreaks/plugin-blog/plugin-blog.tgz
+# Source0-md5:	d722e48067ffccc6786b9ad25e9dcb4e
 URL:		http://www.dokuwiki.org/plugin:blog
+BuildRequires:	rpmbuild(macros) >= 1.520
 Requires:	dokuwiki >= 20080505
 Requires:	dokuwiki-plugin-include
 Requires:	dokuwiki-plugin-pagelist
@@ -18,28 +18,31 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		dokuconf	/etc/webapps/dokuwiki
 %define		dokudir		/usr/share/dokuwiki
 %define		plugindir	%{dokudir}/lib/plugins/%{plugin}
+%define		find_lang 	%{_usrlibrpm}/dokuwiki-find-lang.sh %{buildroot}
 
 %description
-This plugin makes blogs in your wiki easily possible.
+The Blog Plugin makes blogs in your wiki easily possible. The blog
+component shows the latest entries (pages) from a namespace in reverse
+chronological order.
 
 %prep
-%setup -q -n %{plugin}
+%setup -qc
+mv %{plugin}/* .
+
 version=$(cat VERSION)
 if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
 	: %%{version} mismatch
 	exit 1
 fi
 
-rm -f blog.tar.gz
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
-rm -rf $RPM_BUILD_ROOT%{plugindir}/{COPYING,README,VERSION,_template.txt}
+rm $RPM_BUILD_ROOT%{plugindir}/{COPYING,README,VERSION,_template.txt}
 
 # find locales
-sh %{SOURCE1} %{name}.lang
+%find_lang %{name}.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
