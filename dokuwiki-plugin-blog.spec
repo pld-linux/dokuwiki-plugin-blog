@@ -1,15 +1,21 @@
+%define		subver	2016-04-26
+%define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		blog
+%define		php_min_version 5.3.0
+%include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki Blog Plugin
 Name:		dokuwiki-plugin-%{plugin}
-Version:	20090912
-Release:	0.1
+Version:	%{ver}
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://cloud.github.com/downloads/dokufreaks/plugin-blog/plugin-blog.tgz
-# Source0-md5:	d722e48067ffccc6786b9ad25e9dcb4e
-URL:		http://www.dokuwiki.org/plugin:blog
+# no real version, https://github.com/dokufreaks/plugin-blog/issues/90
+Source0:	https://github.com/dokufreaks/plugin-blog/archive/5a8b272/%{plugin}-%{subver}.tar.gz
+# Source0-md5:	4237348a3a3a681e5a5fd877455c6a6f
+URL:		https://www.dokuwiki.org/plugin:blog
 BuildRequires:	rpmbuild(macros) >= 1.520
-Requires:	dokuwiki >= 20080505
+Requires:	dokuwiki >= 20131208
+Requires:	php(core) >= %{php_min_version}
 Requires:	dokuwiki-plugin-include
 Requires:	dokuwiki-plugin-pagelist
 BuildArch:	noarch
@@ -27,9 +33,10 @@ chronological order.
 
 %prep
 %setup -qc
-mv %{plugin}/* .
+mv plugin-%{plugin}-*/* .
 
-version=$(cat VERSION)
+%build
+version=$(awk '/^date/{print $2}' plugin.info.txt)
 if [ "$(echo "$version" | tr -d -)" != %{version} ]; then
 	: %%{version} mismatch
 	exit 1
@@ -39,7 +46,7 @@ fi
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{plugindir}
 cp -a . $RPM_BUILD_ROOT%{plugindir}
-rm $RPM_BUILD_ROOT%{plugindir}/{COPYING,README,VERSION,_template.txt}
+rm $RPM_BUILD_ROOT%{plugindir}/{COPYING,README,_template.txt}
 
 # find locales
 %find_lang %{name}.lang
@@ -57,7 +64,8 @@ fi
 %defattr(644,root,root,755)
 %doc README _template.txt
 %dir %{plugindir}
-%{plugindir}/*.php
 %{plugindir}/*.css
+%{plugindir}/*.php
+%{plugindir}/*.txt
 %{plugindir}/conf
 %{plugindir}/syntax
