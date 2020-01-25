@@ -2,7 +2,6 @@
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		blog
 %define		php_min_version 5.3.0
-%include	/usr/lib/rpm/macros.php
 Summary:	DokuWiki Blog Plugin
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
