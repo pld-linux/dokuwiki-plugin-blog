@@ -5,7 +5,7 @@
 Summary:	DokuWiki Blog Plugin
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/WWW
 # no real version, https://github.com/dokufreaks/plugin-blog/issues/90
