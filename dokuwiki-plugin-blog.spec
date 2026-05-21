@@ -1,17 +1,17 @@
-%define		subver	2016-04-26
+%define		subver	2023-10-24
 %define		ver		%(echo %{subver} | tr -d -)
 %define		plugin		blog
 %define		php_min_version 5.3.0
 Summary:	DokuWiki Blog Plugin
 Name:		dokuwiki-plugin-%{plugin}
 Version:	%{ver}
-Release:	2
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
-# no real version, https://github.com/dokufreaks/plugin-blog/issues/90
-Source0:	https://github.com/dokufreaks/plugin-blog/archive/5a8b272/%{plugin}-%{subver}.tar.gz
-# Source0-md5:	4237348a3a3a681e5a5fd877455c6a6f
+Source0:	https://github.com/dokufreaks/plugin-blog/archive/a23a795c008ce738c509615fa426436a04052827/%{plugin}-%{subver}.tar.gz
+# Source0-md5:	27bbff2464337b6214130d0c9257c6cb
 URL:		https://www.dokuwiki.org/plugin:blog
+BuildRequires:	rpmbuild(find_lang) >= 1.41
 BuildRequires:	rpmbuild(macros) >= 1.520
 Requires:	dokuwiki >= 20131208
 Requires:	php(core) >= %{php_min_version}
@@ -23,7 +23,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		dokuconf	/etc/webapps/dokuwiki
 %define		dokudir		/usr/share/dokuwiki
 %define		plugindir	%{dokudir}/lib/plugins/%{plugin}
-%define		find_lang 	%{_usrlibrpm}/dokuwiki-find-lang.sh %{buildroot}
 
 %description
 The Blog Plugin makes blogs in your wiki easily possible. The blog
@@ -48,7 +47,7 @@ cp -a . $RPM_BUILD_ROOT%{plugindir}
 rm $RPM_BUILD_ROOT%{plugindir}/{COPYING,README,_template.txt}
 
 # find locales
-%find_lang %{name}.lang
+%find_lang %{name}.lang --with-dokuwiki
 
 %clean
 rm -rf $RPM_BUILD_ROOT
